@@ -1,0 +1,117 @@
+? jigdo-gcc41.patch
+Index: src/jigdo-file.cc
+===================================================================
+RCS file: /cvsroot/jigdo/jigdo/src/jigdo-file.cc,v
+retrieving revision 1.19
+diff -u -b -B -r1.19 jigdo-file.cc
+--- src/jigdo-file.cc	5 Jul 2005 12:47:17 -0000	1.19
++++ src/jigdo-file.cc	29 Jan 2006 23:42:14 -0000
+@@ -477,6 +477,16 @@
+ }
+ //______________________________________________________________________
+ 
++//______________________________________________________________________
++
++void outOfMemory() {
++  cerr << subst(_("%1: Out of memory - aborted."), binName()) << endl;
++  exit(3);
++}
++//______________________________________________________________________
++
++} // local namespace
++
+ enum {
+   LONGOPT_BUFSIZE = 0x100, LONGOPT_NOFORCE, LONGOPT_MINSIZE,
+   LONGOPT_MD5SIZE, LONGOPT_MKIMAGECHECK, LONGOPT_NOMKIMAGECHECK,
+@@ -722,15 +732,6 @@
+ 
+   return result;
+ }
+-//______________________________________________________________________
+-
+-void outOfMemory() {
+-  cerr << subst(_("%1: Out of memory - aborted."), binName()) << endl;
+-  exit(3);
+-}
+-//______________________________________________________________________
+-
+-} // local namespace
+ 
+ void exit_tryHelp() {
+   cerr << subst(_("%1: Try `%1 -h' or `man jigdo-file' for more "
+Index: src/mktemplate.hh
+===================================================================
+RCS file: /cvsroot/jigdo/jigdo/src/mktemplate.hh,v
+retrieving revision 1.9
+diff -u -b -B -r1.9 mktemplate.hh
+--- src/mktemplate.hh	5 Jul 2005 12:26:20 -0000	1.9
++++ src/mktemplate.hh	29 Jan 2006 23:42:14 -0000
+@@ -136,7 +136,7 @@
+   void prepareJigdo();
+   void finalizeJigdo(const string& imageLeafName,
+     const string& templLeafName, const MD5Sum& templMd5Sum);
+-  INLINE bool MkTemplate::scanFiles(size_t blockLength, uint32 blockMask,
++  INLINE bool scanFiles(size_t blockLength, uint32 blockMask,
+     size_t md5BlockLength);
+   INLINE bool scanImage(byte* buf, size_t bufferLength, size_t blockLength,
+     uint32 blockMask, size_t md5BlockLength, MD5Sum&);
+Index: src/recursedir.cc
+===================================================================
+RCS file: /cvsroot/jigdo/jigdo/src/recursedir.cc,v
+retrieving revision 1.9
+diff -u -b -B -r1.9 recursedir.cc
+--- src/recursedir.cc	2 Jul 2005 22:05:04 -0000	1.9
++++ src/recursedir.cc	29 Jan 2006 23:42:14 -0000
+@@ -56,6 +56,10 @@
+ 
+   //______________________________________________________________________
+ 
++} // local namespace
++//________________________________________
++
++
+   /* Assign the next object name to result. Returns FAILURE if no more
+      names available. Note: An object name is immediately removed from
+      the start of "objects" when it is copied to "result". The name of
+@@ -130,9 +134,6 @@
+       }
+     }
+   }
+-
+-} // local namespace
+-//________________________________________
+ 
+ bool RecurseDir::getName(string& result, struct stat* fileInfo,
+                          bool checkFiles) 
+Index: src/recursedir.hh
+===================================================================
+RCS file: /cvsroot/jigdo/jigdo/src/recursedir.hh,v
+retrieving revision 1.6
+diff -u -b -B -r1.6 recursedir.hh
+--- src/recursedir.hh	4 Jul 2005 10:25:10 -0000	1.6
++++ src/recursedir.hh	29 Jan 2006 23:42:14 -0000
+@@ -101,7 +101,7 @@
+   string curDir;
+   stack<Level> recurseStack;
+ 
+-  inline bool RecurseDir::getNextObjectName(string& result)
++  inline bool getNextObjectName(string& result)
+     throw(RecurseError);
+   queue<string> objects; // Queue of filenames to output/dirs to recurse into
+   queue<string> objectsFrom; // Files containing filenames
+Index: src/net/download.hh
+===================================================================
+RCS file: /cvsroot/jigdo/jigdo/src/net/download.hh,v
+retrieving revision 1.16
+diff -u -b -B -r1.16 download.hh
+--- src/net/download.hh	9 Apr 2005 23:09:52 -0000	1.16
++++ src/net/download.hh	29 Jan 2006 23:55:04 -0000
+@@ -126,7 +126,7 @@
+   static size_t curlWriter(void* data, size_t size, size_t nmemb,
+                            void* selfPtr);
+   // Called by glibcurl after curl_multi_perform()
+-  static void Download::glibcurlCallback(void*);
++  static void glibcurlCallback(void*);
+ 
+   // Unregister request from glibwww event loop
+ //   void pauseNow();
