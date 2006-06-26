@@ -1,6 +1,6 @@
 Name:		jigdo
 Version:	0.7.3
-Release:	1
+Release:	1%{?dist}
 Summary:	Ease distribution of large files over the Internet
 
 Group:		Applications/Internet
