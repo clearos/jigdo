@@ -1,6 +1,6 @@
 Name:		jigdo
-Version:	0.7.2
-Release:	3
+Version:	0.7.3
+Release:	1
 Summary:	Ease distribution of large files over the Internet
 
 Group:		Applications/Internet
@@ -8,9 +8,7 @@ License:	GPL
 URL:		http://atterer.net/jigdo/
 Source0:	http://atterer.net/jigdo/%{name}-%{version}.tar.bz2
 Source1:    jigdo.desktop
-Patch0:		jigdo-0.7.2-amd64.patch
 Patch1:		jigdo-0.7.1-debug.patch
-Patch2:		jigdo-0.7.2-gcc41.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires:	db4-devel, bzip2-devel, curl-devel, /bin/awk, gettext
 BuildRequires:	desktop-file-utils, gtk2-devel >= 0:2.0.6
@@ -29,9 +27,7 @@ file very easy for users who only have the pieces.
 
 %prep
 %setup -q
-%patch0 -p0 -b .amd64
 %patch1 -p1 -b .debug
-%patch2 -p0 -b .gcc41
 
 %build
 %configure
@@ -69,6 +65,10 @@ rm -rf $RPM_BUILD_ROOT
 %attr(0644,root,root) %{_mandir}/man[^3]/*
 
 %changelog
+* Sun Jun 25 2006 Ian Burrell <ianburrell@gmail> - 0.7.3-1
+- Update to 0.7.3
+- Remove obsolete patches
+
 * Wed Mar  8 2006 Ian Burrell <ianburrell@gmail.com> - 0.7.2-3
 - Remove dependency on w3c-libwww
 
