@@ -1,6 +1,6 @@
 Name:		jigdo
 Version:	0.7.3
-Release:	3%{?dist}
+Release:	4%{?dist}
 Summary:	Ease distribution of large files over the Internet
 
 Group:		Applications/Internet
@@ -65,6 +65,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(0644,root,root) %{_mandir}/man[^3]/*
 
 %changelog
+* Mon Aug 27 2007 Ian M. Burrell <ianburrell@gmail.com> - 0.7.3-4
+- Rebuild for db4 upgrade
+
 * Tue Oct 31 2006 Ian Burrell <ianburrell@gmail.com> - 0.7.3-3
 - Rebuild for curl update
 
