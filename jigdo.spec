@@ -1,6 +1,6 @@
 Name:		jigdo
 Version:	0.7.3
-Release:	4%{?dist}
+Release:	5%{?dist}
 Summary:	Ease distribution of large files over the Internet
 
 Group:		Applications/Internet
@@ -65,6 +65,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(0644,root,root) %{_mandir}/man[^3]/*
 
 %changelog
+* Tue Feb 19 2008 Fedora Release Engineering <rel-eng@fedoraproject.org> - 0.7.3-5
+- Autorebuild for GCC 4.3
+
 * Mon Aug 27 2007 Ian M. Burrell <ianburrell@gmail.com> - 0.7.3-4
 - Rebuild for db4 upgrade
 
