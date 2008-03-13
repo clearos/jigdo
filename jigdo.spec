@@ -1,6 +1,6 @@
 Name:		jigdo
 Version:	0.7.3
-Release:	5%{?dist}
+Release:	6%{?dist}
 Summary:	Ease distribution of large files over the Internet
 
 Group:		Applications/Internet
@@ -9,6 +9,7 @@ URL:		http://atterer.net/jigdo/
 Source0:	http://atterer.net/jigdo/%{name}-%{version}.tar.bz2
 Source1:    jigdo.desktop
 Patch1:		jigdo-0.7.1-debug.patch
+Patch2:     jigdo-0.7.3-gcc43.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires:	db4-devel, bzip2-devel, curl-devel, /bin/awk, gettext
 BuildRequires:	desktop-file-utils, gtk2-devel >= 0:2.0.6
@@ -28,6 +29,7 @@ file very easy for users who only have the pieces.
 %prep
 %setup -q
 %patch1 -p1 -b .debug
+%patch2 -p1 -b .gcc43
 
 %build
 %configure
@@ -65,6 +67,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(0644,root,root) %{_mandir}/man[^3]/*
 
 %changelog
+* Tue Mar 11 2008 Ian Burrell <ianburrell@gmail.com> - 0.7.3-6
+- Add patch for gcc 4.3 support
+
 * Tue Feb 19 2008 Fedora Release Engineering <rel-eng@fedoraproject.org> - 0.7.3-5
 - Autorebuild for GCC 4.3
 
