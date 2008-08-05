@@ -1,10 +1,11 @@
 Name:		jigdo
 Version:	0.7.3
-Release:	6%{?dist}
+Release:	7%{?dist}
 Summary:	Ease distribution of large files over the Internet
 
 Group:		Applications/Internet
-License:	GPL
+# Exception is permission to link with OpenSSL
+License:	GPLv2 with exceptions
 URL:		http://atterer.net/jigdo/
 Source0:	http://atterer.net/jigdo/%{name}-%{version}.tar.bz2
 Source1:    jigdo.desktop
@@ -67,6 +68,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(0644,root,root) %{_mandir}/man[^3]/*
 
 %changelog
+* Tue Aug  5 2008 Tom "spot" Callaway <tcallawa@redhat.com> - 0.7.3-7
+- fix license tag
+
 * Tue Mar 11 2008 Ian Burrell <ianburrell@gmail.com> - 0.7.3-6
 - Add patch for gcc 4.3 support
 
