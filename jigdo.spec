@@ -1,20 +1,20 @@
-Name:		jigdo
-Version:	0.7.3
-Release:	10%{?dist}
-Summary:	Ease distribution of large files over the Internet
+Name:          jigdo
+Version:       0.7.3
+Release:       11%{?dist}
+Summary:       Ease distribution of large files over the Internet
 
-Group:		Applications/Internet
+Group:         Applications/Internet
 # Exception is permission to link with OpenSSL
-License:	GPLv2 with exceptions
-URL:		http://atterer.net/jigdo/
-Source0:	http://atterer.net/jigdo/%{name}-%{version}.tar.bz2
-Source1:    jigdo.desktop
-Patch1:		jigdo-0.7.1-debug.patch
-Patch2:     jigdo-0.7.3-gcc43.patch
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-BuildRequires:	db4-devel, bzip2-devel, curl-devel, /bin/awk, gettext
-BuildRequires:	desktop-file-utils, gtk2-devel >= 0:2.0.6
-Requires:	wget
+License:       GPLv2 with exceptions
+URL:           http://atterer.org/jigdo/
+Source0:       http://atterer.org/sites/atterer/files/2009-08/jigdo/%{name}-%{version}.tar.bz2
+Source1:       jigdo.desktop
+Patch1:        jigdo-0.7.1-debug.patch
+Patch2:        jigdo-0.7.3-gcc43.patch
+BuildRoot:     %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+BuildRequires: db4-devel, bzip2-devel, curl-devel, /bin/awk, gettext
+BuildRequires: desktop-file-utils, gtk2-devel >= 0:2.0.6
+Requires:      wget
 
 %description
 Jigsaw Download, or short jigdo, is a tool designed to ease the
@@ -26,6 +26,15 @@ such large files.  It accomplishes this by using the separate pieces
 of any big file (such as the files contained within a CD/DVD image) to
 create a special "template" file which makes reassembly of the big
 file very easy for users who only have the pieces.
+
+%package gui
+Summary:       Jigdo graphical interface
+Group:         Applications/Internet
+Requires:      jigdo = %{version}-%{release}
+
+%description gui
+GTK2 frontend to jigdo.
+
 
 %prep
 %setup -q
@@ -41,18 +50,22 @@ rm -rf $RPM_BUILD_ROOT
 make DESTDIR="$RPM_BUILD_ROOT" INSTALL_EXE="/usr/bin/install -c" install
 # remove debian-specific script
 rm -f   $RPM_BUILD_ROOT%{_bindir}/jigdo-mirror \
-	$RPM_BUILD_ROOT%{_mandir}/man?/jigdo-mirror*
+    $RPM_BUILD_ROOT%{_mandir}/man?/jigdo-mirror*
 %find_lang %{name}
 
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
 desktop-file-install --vendor fedora \
         --dir $RPM_BUILD_ROOT/%{_datadir}/applications  \
         --add-category X-Fedora-Extra \
-	%{SOURCE1}
+    %{SOURCE1}
 
 # icon
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/pixmaps
 install -m 0644 -p gfx/jigdo-icon.png $RPM_BUILD_ROOT%{_datadir}/pixmaps
+
+# jigdo-mirror
+mkdir -p $RPM_BUILD_ROOT%{_bindir}
+install -m 0755 scripts/jigdo-mirror $RPM_BUILD_ROOT%{_bindir}/jigdo-mirror
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -60,14 +73,28 @@ rm -rf $RPM_BUILD_ROOT
 %files -f %{name}.lang
 %defattr(-,root,root,-)
 %doc changelog COPYING README THANKS doc/*.html doc/TechDetails.txt doc/README-bindist.txt
-%{_bindir}/*
+%{_bindir}/jigdo-file
+%{_bindir}/jigdo-lite
+%{_bindir}/jigdo-mirror
 %dir %{_datadir}/%{name}
+%attr(0644,root,root) %{_mandir}/man[^3]/jigdo-file*
+%attr(0644,root,root) %{_mandir}/man[^3]/jigdo-lite*
+
+%files gui
+%defattr(-,root,root,-)
+%{_bindir}/jigdo
 %{_datadir}/%{name}/*
-%{_datadir}/pixmaps/jigdo-icon.png
+%{_datadir}/pixmaps/*
 %{_datadir}/applications/*
-%attr(0644,root,root) %{_mandir}/man[^3]/*
+%attr(0644,root,root) %{_mandir}/man[^3]/jigdo.*
+
 
 %changelog
+* Sat Sep 10 2011 Jonathan Steffan <jsteffan@fedoraproject.org> - 0.7.3-11
+- Split out gui into sub-package (#675917)
+- Fix URL (#645835)
+- Fix missing jigdo-mirror (#587578)
+
 * Wed Feb 09 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.7.3-10
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
 
