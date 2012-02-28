@@ -1,6 +1,6 @@
 Name:          jigdo
 Version:       0.7.3
-Release:       12%{?dist}
+Release:       13%{?dist}
 Summary:       Ease distribution of large files over the Internet
 
 Group:         Applications/Internet
@@ -90,6 +90,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Feb 28 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.7.3-13
+- Rebuilt for c++ ABI breakage
+
 * Fri Jan 13 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.7.3-12
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_17_Mass_Rebuild
 
