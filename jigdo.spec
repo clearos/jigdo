@@ -1,6 +1,6 @@
 Name:          jigdo
 Version:       0.7.3
-Release:       14%{?dist}
+Release:       15%{?dist}
 Summary:       Ease distribution of large files over the Internet
 
 Group:         Applications/Internet
@@ -11,8 +11,7 @@ Source0:       http://atterer.org/sites/atterer/files/2009-08/jigdo/%{name}-%{ve
 Source1:       jigdo.desktop
 Patch1:        jigdo-0.7.1-debug.patch
 Patch2:        jigdo-0.7.3-gcc43.patch
-BuildRoot:     %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-BuildRequires: db4-devel, bzip2-devel, curl-devel, /bin/awk, gettext
+BuildRequires: libdb-devel, bzip2-devel, curl-devel, /bin/awk, gettext
 BuildRequires: desktop-file-utils, gtk2-devel >= 0:2.0.6
 Requires:      wget
 
@@ -42,11 +41,10 @@ GTK2 frontend to jigdo.
 %patch2 -p1 -b .gcc43
 
 %build
-%configure
+%configure --with-libdb=-ldb
 make %{?_smp_mflags}
 
 %install
-rm -rf $RPM_BUILD_ROOT
 make DESTDIR="$RPM_BUILD_ROOT" INSTALL_EXE="/usr/bin/install -c" install
 # remove debian-specific script
 rm -f   $RPM_BUILD_ROOT%{_bindir}/jigdo-mirror \
@@ -66,9 +64,6 @@ install -m 0644 -p gfx/jigdo-icon.png $RPM_BUILD_ROOT%{_datadir}/pixmaps
 # jigdo-mirror
 mkdir -p $RPM_BUILD_ROOT%{_bindir}
 install -m 0755 scripts/jigdo-mirror $RPM_BUILD_ROOT%{_bindir}/jigdo-mirror
-
-%clean
-rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(-,root,root,-)
@@ -90,6 +85,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sat Aug 04 2012 Parag Nemade <paragn AT fedoraproject DOT org> - 0.7.3-15
+- fix the BR: db4-devel to BR: libdb-devel
+
 * Thu Jul 19 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.7.3-14
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
 
