@@ -1,6 +1,6 @@
 Name:          jigdo
 Version:       0.7.3
-Release:       15%{?dist}
+Release:       16%{?dist}
 Summary:       Ease distribution of large files over the Internet
 
 Group:         Applications/Internet
@@ -85,6 +85,9 @@ install -m 0755 scripts/jigdo-mirror $RPM_BUILD_ROOT%{_bindir}/jigdo-mirror
 
 
 %changelog
+* Thu Feb 14 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.7.3-16
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
+
 * Sat Aug 04 2012 Parag Nemade <paragn AT fedoraproject DOT org> - 0.7.3-15
 - fix the BR: db4-devel to BR: libdb-devel
 
