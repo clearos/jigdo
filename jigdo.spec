@@ -1,6 +1,6 @@
 Name:          jigdo
 Version:       0.7.3
-Release:       16%{?dist}
+Release:       17%{?dist}
 Summary:       Ease distribution of large files over the Internet
 
 Group:         Applications/Internet
@@ -52,7 +52,10 @@ rm -f   $RPM_BUILD_ROOT%{_bindir}/jigdo-mirror \
 %find_lang %{name}
 
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-desktop-file-install --vendor fedora \
+desktop-file-install \
+%if (0%{?fedora} && 0%{?fedora} < 19) || (0%{?rhel} && 0%{?rhel} < 7)
+        --vendor fedora \
+%endif
         --dir $RPM_BUILD_ROOT/%{_datadir}/applications  \
         --add-category X-Fedora-Extra \
     %{SOURCE1}
@@ -85,6 +88,9 @@ install -m 0755 scripts/jigdo-mirror $RPM_BUILD_ROOT%{_bindir}/jigdo-mirror
 
 
 %changelog
+* Wed Mar  6 2013 Toshio Kuratomi <toshio@fedoraproject.org> - 0.7.3-17
+- Remove vendor prefix from desktop file for f19+ https://fedorahosted.org/fesco/ticket/1077
+
 * Thu Feb 14 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.7.3-16
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
 
