@@ -41,6 +41,7 @@ GTK2 frontend to jigdo.
 %patch2 -p1 -b .gcc43
 
 %build
+export LDFLAGS="$LDFLAGS -lpthread"
 %configure --with-libdb=-ldb
 make %{?_smp_mflags}
 
@@ -90,6 +91,7 @@ install -m 0755 scripts/jigdo-mirror $RPM_BUILD_ROOT%{_bindir}/jigdo-mirror
 %changelog
 * Wed Mar  6 2013 Toshio Kuratomi <toshio@fedoraproject.org> - 0.7.3-17
 - Remove vendor prefix from desktop file for f19+ https://fedorahosted.org/fesco/ticket/1077
+- Fix build by explicitly linking to libpthread
 
 * Thu Feb 14 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.7.3-16
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
