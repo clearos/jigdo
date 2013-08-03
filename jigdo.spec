@@ -1,6 +1,6 @@
 Name:          jigdo
 Version:       0.7.3
-Release:       17%{?dist}
+Release:       18%{?dist}
 Summary:       Ease distribution of large files over the Internet
 
 Group:         Applications/Internet
@@ -89,6 +89,9 @@ install -m 0755 scripts/jigdo-mirror $RPM_BUILD_ROOT%{_bindir}/jigdo-mirror
 
 
 %changelog
+* Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.7.3-18
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
+
 * Wed Mar  6 2013 Toshio Kuratomi <toshio@fedoraproject.org> - 0.7.3-17
 - Remove vendor prefix from desktop file for f19+ https://fedorahosted.org/fesco/ticket/1077
 - Fix build by explicitly linking to libpthread
