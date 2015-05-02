@@ -1,6 +1,6 @@
 Name:          jigdo
 Version:       0.7.3
-Release:       20%{?dist}
+Release:       21%{?dist}
 Summary:       Ease distribution of large files over the Internet
 
 Group:         Applications/Internet
@@ -89,6 +89,9 @@ install -m 0755 scripts/jigdo-mirror $RPM_BUILD_ROOT%{_bindir}/jigdo-mirror
 
 
 %changelog
+* Sat May 02 2015 Kalev Lember <kalevlember@gmail.com> - 0.7.3-21
+- Rebuilt for GCC 5 C++11 ABI change
+
 * Sat Aug 16 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.7.3-20
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
 
