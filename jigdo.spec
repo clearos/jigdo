@@ -11,7 +11,7 @@ Source0:       http://atterer.org/sites/atterer/files/2009-08/jigdo/%{name}-%{ve
 Source1:       jigdo.desktop
 Patch1:        jigdo-0.7.1-debug.patch
 Patch2:        jigdo-0.7.3-gcc43.patch
-BuildRequires: libdb-devel, bzip2-devel, curl-devel, /bin/awk, gettext
+BuildRequires: db4-devel, bzip2-devel, curl-devel, /bin/awk, gettext
 BuildRequires: desktop-file-utils, gtk2-devel >= 0:2.0.6
 Requires:      wget
 
